@@ -2,4 +2,4 @@
 
 ---
 
-[Site of Project](https://vagkar.github.io/alco-project/ Project page)
+[Site of Project](https://vagkar.github.io/alco-project/ "Project page")
