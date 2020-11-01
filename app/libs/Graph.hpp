@@ -4,10 +4,10 @@
 #include <list>
 
 
-class Graph {
+class Graph {  //undirected graph
     private:
-        int V;
-        std::list<int> *adj;
+        int V;  //Number of Vertices
+        std::list<int> *adjMatrix;
     public:
         
         Graph(int V);

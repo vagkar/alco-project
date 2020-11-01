@@ -2,14 +2,14 @@
 
 Graph::Graph(int V) {
     this->V = V;
-    adj = new std::list<int>[V];
+    adjMatrix = new std::list<int>[V];
 }
 
 Graph::~Graph() {
-    delete[] adj;
+    delete[] adjMatrix;
 }
 
 void Graph::addEdge(int v, int w) {
-    adj[v].push_back(w);
-    adj[w].push_back(v);
+    adjMatrix[v].push_back(w);
+    adjMatrix[w].push_back(v);
 }
