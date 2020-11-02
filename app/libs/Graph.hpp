@@ -1,19 +1,19 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-#include <list>
-
 
 class Graph {  //undirected graph
     private:
         int V;  //Number of Vertices
-        std::list<int> *adjMatrix;
+        bool** adjMatrix; //adjacency matrix VxV for Edges
     public:
         
         Graph(int V);
         ~Graph();
 
-        void addEdge(int v, int w);
+        void initializeAdjMatrix(bool** adjMatrix); //initialize adjMatrix with false
+
+        void addEdge(int v, int w); //Store to adjMatrix Edges
 
 };
 

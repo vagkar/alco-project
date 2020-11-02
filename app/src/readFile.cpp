@@ -11,7 +11,7 @@ int main() {
     vector<string> lines;
     ifstream inFile; //Input from file testFile.txt
 
-    inFile.open("testFile.txt"); //Open testFile.txt
+    inFile.open("../datasets/testFile.txt"); //Open testFile.txt
 
     if (!inFile.is_open()) { //check for errors
         cout << "Failed open the File." << endl; //error message
