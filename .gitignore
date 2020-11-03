@@ -2,9 +2,3 @@
 #ignore all exe files
 *.exe
 
-
-.vscode/
-=======
-readFile.exe
-.vscode
->>>>>>> 8ff33a903a22ead5b60c39bb172e519a59e73074
