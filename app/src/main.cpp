@@ -1,9 +1,10 @@
 #include <iostream>
 
-#include "../libs/Graph.hpp"
+#include "Graph.cpp"
 
 using namespace std;
 
 int main() {
-
+    Graph* graph = new Graph(5);
+    return 0;
 }
