@@ -1,17 +1,17 @@
 {
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "C/C++: g++.exe build active file",
-            "command": "C:/TDM-GCC-64/bin/g++.exe",
+            "type": "shell",
+            "label": "build",
+            "command": "g++",
             "args": [
                 "-std=c++17",
                 "-Wall",
                 "-Wextra",
                 "-g",
-                "D:/Documents-D/Git_C++/alco-project/app/src/main.cpp",
+                "D:/Documents/Giannis/σπιτι/vaggos/C++_reps/alco-project/app/src/main.cpp",
                 "-o",
-                "D:/Documents-D/Git_C++/alco-project/app/src/main.exe"
+                "D:/Documents/Giannis/σπιτι/vaggos/C++_reps/alco-project/app/src/main.exe"
             ],
             "options": {
                 "cwd": "C:/TDM-GCC-64/bin"
