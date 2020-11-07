@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Graph.cpp"
+#include "Graph.hpp"
 
 using namespace std;
 
