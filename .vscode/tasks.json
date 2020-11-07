@@ -9,10 +9,10 @@
                 "-Wall",
                 "-Wextra",
                 "-g",
-                "D:\\C++\\alco-project\\app\\src\\Graph.cpp",
-                "D:\\C++\\alco-project\\app\\src\\main.cpp",
+                "${workspaceFolder}\\app\\src\\Graph.cpp",
+                "${workspaceFolder}\\app\\src\\main.cpp",
                 "-o",
-                "D:\\C++\\alco-project\\app\\src\\main.exe"
+                "${workspaceFolder}\\app\\src\\main.exe"
             ],
             "options": {
                 "cwd": "C:/TDM-GCC-64/bin"
