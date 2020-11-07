@@ -9,9 +9,9 @@ int main() {
 
     string fileContent;
     vector<string> lines;
-    ifstream inFile; //Input from file testFile.txt
+    ifstream inFile; //Input from file
 
-    inFile.open("../datasets/testFile.txt"); //Open testFile.txt
+    inFile.open("../datasets/toy_e5_s6.stu"); //Open file
 
     if (!inFile.is_open()) { //check for errors
         cout << "Failed open the File." << endl; //error message
