@@ -42,12 +42,19 @@ void readData(string fn, int exams) {
             cout << studentId << " ";
         cout << endl;        
     }
+    cout << endl;
 }
 
 int main() {
 
-    readData("../datasets/toy_e5_s6.stu", 5);
+    //readData("../datasets/car-f-92.stu", 543);
+    readData("../datasets/toy_e5_s6.stu", 5); //debug working with full path file
+    
     Graph* graph = new Graph(5);
+
+    cout << "Graph Vertices: " << graph -> getVertices() << endl;
+
     delete graph;
+    
     return 0;
 }

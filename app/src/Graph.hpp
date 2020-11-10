@@ -5,15 +5,17 @@
 class Graph {  //undirected graph
     private:
         int V;  //Number of Vertices
-        bool** adjMatrix; //adjacency matrix VxV for Edges
+        int** adjMatrix; //adjacency matrix VxV for Edges
     public:
         
         Graph(int V);
         ~Graph();
 
-        void initializeAdjMatrix(bool** adjMatrix); //initialize adjMatrix with false
+        void initializeAdjMatrix(int** adjMatrix); //initialize adjMatrix with false
 
         void addEdge(int v, int w); //Store to adjMatrix Edges
+
+        int getVertices(); 
 
 };
 
