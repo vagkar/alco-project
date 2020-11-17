@@ -1,16 +1,20 @@
+#include "Graph.hpp"
+
 #include <iostream>
 #include <vector>
 #include <set>
 #include <fstream>
 #include <sstream>
-
-#include "Graph.hpp"
+#include <bits/stdc++.h>
 
 using namespace std;
 
 void readData(string fn, int exams) {
 
     vector<set<int>> examStudents(exams + 1);
+
+    Graph* graph = new Graph(exams, fn);
+
     fstream fs(fn);
 
     if (!fs.is_open()) {
@@ -43,18 +47,52 @@ void readData(string fn, int exams) {
         cout << endl;        
     }
     cout << endl;
+
+     //Συμπλήρωση του πίνακα γειτνίασης
+     graph -> initializeAdjMatrix(examStudents);
+    
+
+    // Υπολογισμός συντελεστή πυκνότητας
+    graph -> conflictDensity();
+    
+    // Υπολογισμός Min Med Max
+    graph -> degMinMedMax();
+
+    // Υπολογισμός Mean
+    graph -> degMean();
+
+    // Υπολογισμός CV %
+    graph -> coefVar();
+
+    //print statistic table;
+    cout << graph -> toString() << endl;
+
+    delete graph;
 }
 
 int main() {
+    //Problems
+    string datasets[14] = {
+        "../datasets/car-f-92.stu", //0
+        "../datasets/car-s-91.stu", //1
+        "../datasets/ear-f-83.stu", //2
+        "../datasets/hec-s-92.stu", //3
+        "../datasets/kfu-s-93.stu", //4
+        "../datasets/lse-f-91.stu", //5
+        "../datasets/pur-s-93.stu", //6
+        "../datasets/rye-s-93.stu", //7
+        "../datasets/sta-f-83.stu", //8
+        "../datasets/toy-e-s6.stu", //9
+        "../datasets/tre-s-92.stu", //10
+        "../datasets/uta-s-92.stu", //11
+        "../datasets/ute-s-92.stu", //12
+        "../datasets/yor-f-83.stu", //13
+    };
 
-    //readData("../datasets/car-f-92.stu", 543);
-    readData("../datasets/toy_e5_s6.stu", 5); //debug working with full path file
-    
-    Graph* graph = new Graph(5);
+    //Exams of Problems
+    int exams[14] = {543, 682, 190, 81, 461, 381, 2417, 486, 139, 5, 261, 622, 184, 181};
 
-    cout << "Graph Vertices: " << graph -> getVertices() << endl;
-
-    delete graph;
+    readData(datasets[8], exams[8]);
     
     return 0;
 }
