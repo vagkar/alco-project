@@ -82,15 +82,15 @@ int main() {
         "../datasets/pur-s-93.stu", //6
         "../datasets/rye-s-93.stu", //7
         "../datasets/sta-f-83.stu", //8
-        "../datasets/toy-e-s6.stu", //9
-        "../datasets/tre-s-92.stu", //10
-        "../datasets/uta-s-92.stu", //11
-        "../datasets/ute-s-92.stu", //12
-        "../datasets/yor-f-83.stu", //13
+        "../datasets/tre-s-92.stu", //9
+        "../datasets/uta-s-92.stu", //10
+        "../datasets/ute-s-92.stu", //11
+        "../datasets/yor-f-83.stu", //12
+        "../datasets/toy-e-s6.stu", //13
     };
 
     //Exams of Problems
-    int exams[14] = {543, 682, 190, 81, 461, 381, 2417, 486, 139, 5, 261, 622, 184, 181};
+    int exams[14] = {543, 682, 190, 81, 461, 381, 2417, 486, 139, 261, 622, 184, 181, 5};
 
     readData(datasets[8], exams[8]);
     

@@ -17,7 +17,7 @@ void Graph::initializeAdjMatrix(std::vector<std::set<int>> examStudents) {
         for (int j = 0; j < V; j++)
         {
             if (i == j){
-                //graph -> addEdge(i, j, 0); Εφόσον αρχικοποιήσαμε τον πίνακα κατά τη δημιουργία της κλάσης με 0
+                addEdge(i, j, 0); 
                 continue;
             }
             int c = commonElemets(examStudents[i + 1], examStudents[j + 1]);
@@ -98,16 +98,16 @@ void Graph::degMean() {
 }
 
 void Graph::coefVar() {
-    int sum = 0;
-    int a, b;
+    double sum = 0.0;
+    double a, b;
     for (int i = 0; i < sequenceDegree.size(); i++) {
-        a = sequenceDegree[i] - mean;
-        b = pow(a, 2);
+        a = double(sequenceDegree[i]) - mean;
+        b = pow(a, 2.0);
         sum += b;
     }
-    double S2 = double(sum) / double(sequenceDegree.size());
+    double S2 = sum / double(sequenceDegree.size());
     double S = sqrt(S2);
-    this -> CV = (S / mean) * 100.0;
+    this -> CV = (S / mean) * 100;
 }
 
 int Graph::getVertices() {return V;}
@@ -117,5 +117,5 @@ int* Graph::getAdjMatrix() {return adjMatrix;}
 std::string Graph::toString() {
     return "Name: " + this -> problemName.substr(12, 8) + " |V|: " + std::to_string(V) + " Conflict Density: "+ std::to_string(confDen) +
                                         " Min: " + std::to_string(min) + " Med: " + std::to_string(med) + " Max: " + std::to_string(max) +
-                                        " Mean: " + std::to_string(mean) + " CV%: " + std::to_string(CV);
+                                        " Mean: " + std::to_string(mean) + " CV(%): " + std::to_string(CV) + "%";
 }
