@@ -1,5 +1,7 @@
 #include "Graph.hpp"
 
+Graph::Graph() {}
+
 Graph::Graph(int V, std::string problemName) {
     this->V = V;
     this -> problemName = problemName;
@@ -91,7 +93,7 @@ void Graph::degMinMedMax() {
 
 void Graph::degMean() {
     int sum = 0;
-    for (int i = 0; i < sequenceDegree.size(); i++) {
+    for (int i = 0; i < int(sequenceDegree.size()); i++) {
         sum += sequenceDegree[i];
     }
     this -> mean = double(sum) / double(sequenceDegree.size());
@@ -100,7 +102,7 @@ void Graph::degMean() {
 void Graph::coefVar() {
     double sum = 0.0;
     double a, b;
-    for (int i = 0; i < sequenceDegree.size(); i++) {
+    for (int i = 0; i < int(sequenceDegree.size()); i++) {
         a = double(sequenceDegree[i]) - mean;
         b = pow(a, 2.0);
         sum += b;
@@ -108,6 +110,12 @@ void Graph::coefVar() {
     double S2 = sum / double(sequenceDegree.size());
     double S = sqrt(S2);
     this -> CV = (S / mean) * 100;
+}
+
+void Graph::printStatisticArray() {
+    for (int i = 0; i < 13; i++) {
+        std::cout << statisticArray[i] << std::endl;
+    }
 }
 
 int Graph::getVertices() {return V;}

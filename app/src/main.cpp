@@ -70,7 +70,7 @@ void readData(string fn, int exams) {
     delete graph;
 }
 
-int main() {
+void selectMenuOption(int option) {
     //Problems
     string datasets[14] = {
         "../datasets/car-f-92.stu", //0
@@ -86,13 +86,46 @@ int main() {
         "../datasets/uta-s-92.stu", //10
         "../datasets/ute-s-92.stu", //11
         "../datasets/yor-f-83.stu", //12
-        "../datasets/toy-e-s6.stu", //13
+        "../datasets/toy-e-s6.stu", //13 no toronto data, created for tests
     };
 
     //Exams of Problems
-    int exams[14] = {543, 682, 190, 81, 461, 381, 2417, 486, 139, 261, 622, 184, 181, 5};
+    int exams[14] = {543, 682, 190, 81, 461, 381, 2419, 486, 139, 261, 622, 184, 181, 5};
 
-    readData(datasets[8], exams[8]);
+    Graph g;
+
+    switch (option)
+    {
+    case 1:
+        g.printStatisticArray();
+        break;
+
+    case 2:
+        readData(datasets[8], exams[8]);
+        break;
+
+    default:
+        exit(-1);
+        break;
+    }
+}
+
+void executeMenu() {
     
+
+    int option;
+
+    cout << "1) Print Statistics Array" << endl;
+    cout << "2) Read Data from file" << endl;
+    cout << "Or Press any key to exit" << endl;
+    cin >> option;
+
+    selectMenuOption(option);
+}
+
+int main() {
+
+    executeMenu();
+
     return 0;
 }
