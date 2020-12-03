@@ -67,6 +67,8 @@ void readData(string fn, int exams) {
     //print statistic table;
     cout << graph -> toString() << endl;
 
+    graph -> greedyColoring();
+
     delete graph;
 }
 
@@ -101,7 +103,7 @@ void selectMenuOption(int option) {
         break;
 
     case 2:
-        readData(datasets[8], exams[8]);
+        readData(datasets[13], exams[13]);
         break;
 
     default:

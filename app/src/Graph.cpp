@@ -13,6 +13,7 @@ Graph::~Graph() {
 }
 
 void Graph::initializeAdjMatrix(std::vector<std::set<int>> examStudents) {
+
     std::cout << "Adjacency Matrix" << std::endl;
     for (int i = 0; i < V; i++)
     {
@@ -72,6 +73,10 @@ void Graph::degMinMedMax() {
                 c++;
             }
         }
+
+        Vertex v(i, c);
+        this -> vertices.push_back(v);
+
         this -> sequenceDegree.push_back(c);
         if (c > max)
             this -> max = c;
@@ -110,6 +115,61 @@ void Graph::coefVar() {
     double S2 = sum / double(sequenceDegree.size());
     double S = sqrt(S2);
     this -> CV = (S / mean) * 100;
+}
+
+void Graph::greedyColoring()
+{
+    sortByDegree();
+    int colorOfVertex[V];
+
+    colorOfVertex[vertices[0].getVertex()] = 0;
+
+    for (int u = 1; u < V; u++)
+        colorOfVertex[vertices[u].getVertex()] = -1; 
+
+    bool availableColors[V];
+    for (int cr = 0; cr < V; cr++)
+        availableColors[cr] = true;
+
+    // Assign colors to remaining V-1 vertices
+    for (int u = 1; u < V; u++)
+    {
+        // Process all adjacent vertices and flag their colors
+        // as unavailable
+        for (int i = 0; i < V; i++) {
+            if (adjMatrix[vertices[u].getVertex() * V + i] <= 0)
+                continue;
+
+            if (colorOfVertex[i] != -1)
+                availableColors[colorOfVertex[i]] = false;
+        }
+
+        // Find the first available color
+        int cr;
+        for (cr = 0; cr < V; cr++)
+            if (availableColors[cr])
+                break;
+
+        colorOfVertex[vertices[u].getVertex()] = cr; // Assign the found color
+
+        // Reset the values back to true for the next iteration
+        for (int i = 0; i < V; i++) {
+            if (adjMatrix[vertices[u].getVertex() * V + i] <= 0)
+                continue;
+
+            if (colorOfVertex[i] != -1)
+                availableColors[colorOfVertex[i]] = true;
+        }
+    }
+
+    // print the coloredVertex
+    for (int u = 0; u < V; u++)
+        std::cout << "Vertex " << vertices[u].getVertex() << " --->  Color "
+             << colorOfVertex[vertices[u].getVertex()] << std::endl;
+}
+
+void Graph::sortByDegree() {
+    std::sort(vertices.rbegin(), vertices.rend());
 }
 
 void Graph::printStatisticArray() {

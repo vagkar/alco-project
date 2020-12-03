@@ -9,6 +9,7 @@
                 "-Wall",
                 "-Wextra",
                 "-g",
+                "${workspaceFolder}\\app\\src\\Vertex.cpp",
                 "${workspaceFolder}\\app\\src\\Graph.cpp",
                 "${workspaceFolder}\\app\\src\\main.cpp",
                 "-o",

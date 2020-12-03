@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <bits/stdc++.h>
+#include "Vertex.hpp"
 
 class Graph {  //undirected graph
     private:
@@ -32,6 +33,8 @@ class Graph {  //undirected graph
             "Name: ute-s-92 |V|: 184 Conflict Density: 0.084475 Min: 2 Med: 13 Max: 58 Mean: 15.543478 CV(%): 69.135061%",
             "Name: yor-f-83 |V|: 181 Conflict Density: 0.287293 Min: 7 Med: 51 Max: 117 Mean: 52.000000 CV(%): 35.226810%"
         };
+
+        std::vector<Vertex> vertices;
     public:
         
         Graph();
@@ -51,6 +54,10 @@ class Graph {  //undirected graph
         void degMean();
 
         void coefVar(); // coefficient of variation (CV)
+
+        void greedyColoring();
+
+        void sortByDegree();
 
         void printStatisticArray();
 
