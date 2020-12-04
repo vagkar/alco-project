@@ -164,8 +164,8 @@ void Graph::greedyColoring()
 
     // print the coloredVertex
     for (int u = 0; u < V; u++)
-        std::cout << "Vertex " << vertices[u].getVertex() << " --->  Color "
-             << colorOfVertex[vertices[u].getVertex()] << std::endl;
+        std::cout << "Vertex " << u << " --->  Color "
+             << colorOfVertex[u] << std::endl;
 }
 
 void Graph::sortByDegree() {
