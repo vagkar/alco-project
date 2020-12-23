@@ -5,7 +5,6 @@
 #include <set>
 #include <fstream>
 #include <sstream>
-#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -67,12 +66,12 @@ void readData(string fn, int exams) {
     //print statistic table;
     cout << graph -> toString() << endl;
 
-    graph -> greedyColoring();
+    graph -> FirstFit();
 
     delete graph;
 }
 
-void selectMenuOption(int option) {
+void selectFile() {
     //Problems
     string datasets[14] = {
         "../datasets/car-f-92.stu", //0
@@ -90,20 +89,32 @@ void selectMenuOption(int option) {
         "../datasets/yor-f-83.stu", //12
         "../datasets/toy-e-s6.stu", //13 no toronto data, created for tests
     };
-
+    
     //Exams of Problems
     int exams[14] = {543, 682, 190, 81, 461, 381, 2419, 486, 139, 261, 622, 184, 181, 5};
+    
+    int option;
 
+    for (int i = 0; i < 14; i++) 
+        cout << i + 1  << ") " << datasets[i].substr(12, 8) << endl;  
+
+    cin >> option;
+    option--;
+
+    readData(datasets[option], exams[option]);
+}
+
+void selectMenuOption(int option) {
+    
     Graph g;
 
-    switch (option)
-    {
+    switch (option) {
     case 1:
         g.printStatisticArray();
         break;
 
     case 2:
-        readData(datasets[13], exams[13]);
+        selectFile();
         break;
 
     default:

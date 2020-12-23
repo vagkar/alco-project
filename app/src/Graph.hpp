@@ -55,7 +55,7 @@ class Graph {  //undirected graph
 
         void coefVar(); // coefficient of variation (CV)
 
-        void greedyColoring();
+        void FirstFit();
 
         void sortByDegree();
 

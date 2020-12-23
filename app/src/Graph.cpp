@@ -117,7 +117,7 @@ void Graph::coefVar() {
     this -> CV = (S / mean) * 100;
 }
 
-void Graph::greedyColoring()
+void Graph::FirstFit()
 {
     sortByDegree();
     int colorOfVertex[V];
