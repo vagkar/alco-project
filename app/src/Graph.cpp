@@ -119,7 +119,7 @@ void Graph::coefVar() {
 
 void Graph::FirstFit()
 {
-    sortByDegree();
+    sortVerticesByDegree();
     int colorOfVertex[V];
 
     colorOfVertex[vertices[0].getVertex()] = 0;
@@ -168,7 +168,7 @@ void Graph::FirstFit()
              << colorOfVertex[u] << std::endl;
 }
 
-void Graph::sortByDegree() {
+void Graph::sortVerticesByDegree() {
     std::sort(vertices.rbegin(), vertices.rend());
 }
 

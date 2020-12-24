@@ -26,3 +26,11 @@ void Vertex::setDegree(int degree) {
 int Vertex::getDegree() {
     return this -> degree;
 }
+
+void Vertex::setSatur(int satur) {
+    this -> satur = satur;
+}
+
+int Vertex::getSatur() {
+    return this -> satur;
+}

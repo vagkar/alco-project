@@ -6,6 +6,7 @@ class Vertex {
     private:
         int vertex;
         int degree;
+        int satur;
 
     public:
         Vertex();
@@ -18,6 +19,9 @@ class Vertex {
 
         void setDegree(int degree);
         int getDegree();
+
+        void setSatur(int satur);
+        int getSatur();
 };
 
 #endif /* VERTEX_HPP */

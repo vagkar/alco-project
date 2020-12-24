@@ -57,7 +57,7 @@ class Graph {  //undirected graph
 
         void FirstFit();
 
-        void sortByDegree();
+        void sortVerticesByDegree();
 
         void printStatisticArray();
 

@@ -8,6 +8,27 @@
 
 using namespace std;
 
+void selectAlgorithm(Graph* g) {
+    cout << "1) First Fit" << endl;
+    cout << "2) DSatur" << endl;
+    cout << "3) RLF" << endl;
+    cout << "4) Backtracking DSatur" << endl;
+    int option;
+    cin >> option;
+    
+    switch (option)
+    {
+    case 1:
+        g -> FirstFit();
+        break;
+    
+    default:
+        exit(-1);
+        break;
+    }
+
+}
+
 void readData(string fn, int exams) {
 
     vector<set<int>> examStudents(exams + 1);
@@ -66,7 +87,8 @@ void readData(string fn, int exams) {
     //print statistic table;
     cout << graph -> toString() << endl;
 
-    graph -> FirstFit();
+    //choose algorithm
+    selectAlgorithm(graph);
 
     delete graph;
 }
@@ -101,7 +123,9 @@ void selectFile() {
     cin >> option;
     option--;
 
-    readData(datasets[option], exams[option]);
+    if (option < 0 || option > 13)
+        exit(-1);
+    readData(datasets[option], exams[option]);    
 }
 
 void selectMenuOption(int option) {
