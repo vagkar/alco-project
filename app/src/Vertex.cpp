@@ -5,6 +5,7 @@ Vertex::Vertex(){}
 Vertex::Vertex(int vertex, int degree) {
     setVertex(vertex);
     setDegree(degree);
+    setSatur(0);
 }
 
 bool Vertex::operator < (const Vertex& v) {
@@ -33,4 +34,16 @@ void Vertex::setSatur(int satur) {
 
 int Vertex::getSatur() {
     return this -> satur;
+}
+
+void Vertex::addColor(int color) {
+    this -> colors.push_back(color);
+}
+
+int Vertex::getSizeOfColors() {
+    return this -> colors.size();
+}
+
+std::vector<int> Vertex::getColors() {
+    return this -> colors;
 }

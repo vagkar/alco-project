@@ -1,7 +1,7 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-
+#include <list>
 #include <set>
 #include <iostream>
 #include <vector>
@@ -11,7 +11,7 @@
 class Graph {  //undirected graph
     private:
         int V;  //Number of Vertices
-        int* adjMatrix; //adjacency matrix VxV for Edges
+        std::list<Vertex>* adjList; //adjacency matrix VxV for Edges
         double confDen;
         int min,med,max;
         double mean;
@@ -57,13 +57,15 @@ class Graph {  //undirected graph
 
         void FirstFit();
 
+        void DSatur();
+
         void sortVerticesByDegree();
 
         void printStatisticArray();
 
         int getVertices(); // return number of Vertices
 
-        int* getAdjMatrix(); // return adjacency matrix
+        std::list<Vertex>* getAdjList(); // return adjacency matrix
 
         std::string toString();
 

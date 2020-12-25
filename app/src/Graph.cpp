@@ -5,11 +5,11 @@ Graph::Graph() {}
 Graph::Graph(int V, std::string problemName) {
     this->V = V;
     this -> problemName = problemName;
-    adjMatrix = new int[V * V];
+    adjList = new std::list<Vertex>[V];
 }
 
 Graph::~Graph() {
-    delete[] adjMatrix;
+    delete[] adjList;
 }
 
 void Graph::initializeAdjMatrix(std::vector<std::set<int>> examStudents) {
@@ -17,22 +17,28 @@ void Graph::initializeAdjMatrix(std::vector<std::set<int>> examStudents) {
     std::cout << "Adjacency Matrix" << std::endl;
     for (int i = 0; i < V; i++)
     {
-        for (int j = 0; j < V; j++)
+        for (int j = i; j < V; j++)
         {
-            if (i == j){
-                addEdge(i, j, 0); 
+            if (i == j) 
                 continue;
-            }
+
             int c = commonElemets(examStudents[i + 1], examStudents[j + 1]);
-            if (c > 0)
+            if (c > 0){
                 std::cout << i + 1 << " " << j + 1 << " " << c << std::endl;
-            addEdge(i, j, c);
+                addEdge(i, j, c);
+            }
         }
     }
 }
 
 void Graph::addEdge(int i, int j, int c) {
-    adjMatrix[i * V + j] = c;
+    Vertex v1(j,c);
+    adjList[i].push_back(v1);
+
+    if (i != j) {
+        Vertex v2(i,c);
+        adjList[j].push_back(v2);
+    }
 }
 
 int Graph::commonElemets(std::set<int> s1, std::set<int> s2) {
@@ -51,11 +57,8 @@ int Graph::commonElemets(std::set<int> s1, std::set<int> s2) {
 void Graph::conflictDensity() {
     int c = 0;
     for (int i = 0; i < V; i++) {
-        for (int j = 0; j < V; j++) {
-            if (adjMatrix[i * V + j] > 0) {
-                c++;
-            }
-            
+        for (auto j = adjList[i].begin(); j != adjList[i].end(); ++j) {
+            c++;
         }
     }
     this -> confDen = double(c) / double(V * V);
@@ -68,10 +71,8 @@ void Graph::degMinMedMax() {
 
     for (int i = 0; i < V; i++) {
         c = 0;
-        for (int j = 0; j < V; j++) {
-            if (adjMatrix[i * V + j] > 0) {
-                c++;
-            }
+        for (auto j = adjList[i].begin(); j != adjList[i].end(); ++j) {
+            c++;
         }
 
         Vertex v(i, c);
@@ -136,12 +137,9 @@ void Graph::FirstFit()
     {
         // Process all adjacent vertices and flag their colors
         // as unavailable
-        for (int i = 0; i < V; i++) {
-            if (adjMatrix[vertices[u].getVertex() * V + i] <= 0)
-                continue;
-
-            if (colorOfVertex[i] != -1)
-                availableColors[colorOfVertex[i]] = false;
+        for (auto i = adjList[vertices[u].getVertex()].begin(); i != adjList[vertices[u].getVertex()].end(); ++i) {
+            if (colorOfVertex[i->getVertex()] != -1)
+                availableColors[colorOfVertex[i->getVertex()]] = false;
         }
 
         // Find the first available color
@@ -154,9 +152,6 @@ void Graph::FirstFit()
 
         // Reset the values back to true for the next iteration
         for (int i = 0; i < V; i++) {
-            if (adjMatrix[vertices[u].getVertex() * V + i] <= 0)
-                continue;
-
             if (colorOfVertex[i] != -1)
                 availableColors[colorOfVertex[i]] = true;
         }
@@ -167,6 +162,49 @@ void Graph::FirstFit()
         std::cout << "Vertex " << u << " --->  Color "
              << colorOfVertex[u] << std::endl;
 }
+
+// void Graph::DSatur() {
+//     sortVerticesByDegree();
+//     int colorOfVertex[V];
+
+//     colorOfVertex[vertices[0].getVertex()] = 0;
+
+//     for (int i = 0; i < V; i++) {
+//         if (adjMatrix[vertices[0].getVertex() * V + i] <= 0)
+//                 continue;
+//         vertices[i].addColor(0);
+//     }
+
+//     bool availableColors[V];
+//     for (int cr = 0; cr < V; cr++)
+//         availableColors[cr] = true;
+        
+
+//     for (int v = 1; v < V; v++)
+//         colorOfVertex[vertices[v].getVertex()] = -1;
+    
+//     bool availableColors[V];;
+//     for (int cr = 0; cr < V; cr++)
+//         availableColors[cr] = true;
+
+//     int maxSatur = 0;
+
+//     for (int v = 1; v < V; v++) {
+//         for (int i = 0; i < V; i++) {
+//             if (adjMatrix[vertices[v].getVertex() * V + i] <= 0)
+//                 continue;
+
+//             if (colorOfVertex[i] != -1) {
+//                 availableColors[colorOfVertex[i]] = false;
+//                 continue;
+//             }
+
+//             maxSatur = vertices[i].getSizeOfColors();
+            
+//         }
+
+//     }
+// }
 
 void Graph::sortVerticesByDegree() {
     std::sort(vertices.rbegin(), vertices.rend());
@@ -180,7 +218,7 @@ void Graph::printStatisticArray() {
 
 int Graph::getVertices() {return V;}
 
-int* Graph::getAdjMatrix() {return adjMatrix;}
+std::list<Vertex>* Graph::getAdjList() {return adjList;}
 
 std::string Graph::toString() {
     return "Name: " + this -> problemName.substr(12, 8) + " |V|: " + std::to_string(V) + " Conflict Density: "+ std::to_string(confDen) +
