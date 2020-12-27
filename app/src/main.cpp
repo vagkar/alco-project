@@ -22,9 +22,9 @@ void selectAlgorithm(Graph* g) {
         g -> FirstFit();
         break;
     
-    // case 2:
-    //     g -> DSatur();
-    //     break;
+    case 2:
+        g -> DSatur();
+        break;
 
     default:
         exit(-1);
@@ -73,7 +73,7 @@ void readData(string fn, int exams) {
     cout << endl;
 
      //Συμπλήρωση του πίνακα γειτνίασης
-    graph -> initializeAdjMatrix(examStudents);
+    graph -> initializeAdjList(examStudents);
     
 
     // Υπολογισμός συντελεστή πυκνότητας

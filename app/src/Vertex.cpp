@@ -2,14 +2,33 @@
 
 Vertex::Vertex(){}
 
+Vertex::Vertex(int vertex) {
+    setVertex(vertex);
+    setSatur(0);
+}
+
 Vertex::Vertex(int vertex, int degree) {
     setVertex(vertex);
     setDegree(degree);
     setSatur(0);
 }
 
+Vertex::Vertex(int vertex, int degree, int satur, bool isColored) {
+    setVertex(vertex);
+    setDegree(degree);
+    setSatur(satur);
+    setVertexColored(isColored);
+}
+
+// Vertex::Vertex(Vertex& obj) {
+//     setVertex(obj.vertex);
+//     setDegree(obj.degree);
+//     setSatur(obj.satur);
+//     setVertexColored(obj.isColored);
+// }
+
 bool Vertex::operator < (const Vertex& v) {
-    return getDegree() < v.degree;
+    return this->degree < v.degree;
 }
 
 void Vertex::setVertex(int vertex) {
@@ -34,6 +53,14 @@ void Vertex::setSatur(int satur) {
 
 int Vertex::getSatur() {
     return this -> satur;
+}
+
+void Vertex::setVertexColored(bool isColored) {
+    this -> isColored = isColored;
+}
+
+bool Vertex::isVertexColored() {
+    return this -> isColored;
 }
 
 void Vertex::addColor(int color) {

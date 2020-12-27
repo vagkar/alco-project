@@ -9,36 +9,34 @@ Graph::Graph(int V, std::string problemName) {
 }
 
 Graph::~Graph() {
-    delete[] adjList;
+    delete adjList;
 }
 
-void Graph::initializeAdjMatrix(std::vector<std::set<int>> examStudents) {
+void Graph::initializeAdjList(std::vector<std::set<int>> examStudents) {
 
-    std::cout << "Adjacency Matrix" << std::endl;
-    for (int i = 0; i < V; i++)
-    {
-        for (int j = i; j < V; j++)
-        {
+    std::cout << "Adjacency List" << std::endl;
+    for (int i = 0; i < V; i++) {
+        std::cout << i + 1 << ": ";
+        for (int j = 0; j < V; j++) {
             if (i == j) 
                 continue;
 
             int c = commonElemets(examStudents[i + 1], examStudents[j + 1]);
-            if (c > 0){
-                std::cout << i + 1 << " " << j + 1 << " " << c << std::endl;
-                addEdge(i, j, c);
+            if (c > 0) {
+                if (j > i)
+                    addEdge(i, j);
+                std::cout << j + 1 << " ";
             }
         }
+        std::cout << std::endl;
     }
 }
 
-void Graph::addEdge(int i, int j, int c) {
-    Vertex v1(j,c);
+void Graph::addEdge(int i, int j) {
+    Vertex v1(j);
     adjList[i].push_back(v1);
-
-    if (i != j) {
-        Vertex v2(i,c);
-        adjList[j].push_back(v2);
-    }
+    Vertex v2(i);
+    adjList[j].push_back(v2);
 }
 
 int Graph::commonElemets(std::set<int> s1, std::set<int> s2) {
@@ -65,28 +63,23 @@ void Graph::conflictDensity() {
 }
 
 void Graph::degMinMedMax() {
-    int c;
-    this -> max = 0;
-    this -> min = (2 ^ 31) - 1; //max του integer
+    this -> max = INT_MIN;
+    this -> min = INT_MAX; //max του integer
 
     for (int i = 0; i < V; i++) {
-        c = 0;
-        for (auto j = adjList[i].begin(); j != adjList[i].end(); ++j) {
-            c++;
-        }
-
-        Vertex v(i, c);
+        int degree = adjList[i].size();
+        Vertex v(i, degree);
         this -> vertices.push_back(v);
 
-        this -> sequenceDegree.push_back(c);
-        if (c > max)
-            this -> max = c;
+        this -> sequenceDegree.push_back(degree);
+        if (degree > max)
+            this -> max = degree;
 
-        if (c < min)
-            this -> min = c;
+        if (degree < min)
+            this -> min = degree;
     }
 
-    sort(sequenceDegree.begin(), sequenceDegree.end());
+    std::sort(sequenceDegree.begin(), sequenceDegree.end());
     int indexMed;
     if (sequenceDegree.size() % 2 == 0) {
         indexMed = sequenceDegree.size() / 2;
@@ -120,10 +113,8 @@ void Graph::coefVar() {
 
 void Graph::FirstFit()
 {
-    sortVerticesByDegree();
+    sortVerticesByDegree(vertices);
     int colorOfVertex[V];
-
-    colorOfVertex[vertices[0].getVertex()] = 0;
 
     for (int u = 1; u < V; u++)
         colorOfVertex[vertices[u].getVertex()] = -1; 
@@ -131,6 +122,8 @@ void Graph::FirstFit()
     bool availableColors[V];
     for (int cr = 0; cr < V; cr++)
         availableColors[cr] = true;
+
+    colorOfVertex[vertices[0].getVertex()] = 0;
 
     // Assign colors to remaining V-1 vertices
     for (int u = 1; u < V; u++)
@@ -163,57 +156,114 @@ void Graph::FirstFit()
              << colorOfVertex[u] << std::endl;
 }
 
-// void Graph::DSatur() {
-//     sortVerticesByDegree();
-//     int colorOfVertex[V];
+void Graph::DSatur() {
 
-//     colorOfVertex[vertices[0].getVertex()] = 0;
-
-//     for (int i = 0; i < V; i++) {
-//         if (adjMatrix[vertices[0].getVertex() * V + i] <= 0)
-//                 continue;
-//         vertices[i].addColor(0);
-//     }
-
-//     bool availableColors[V];
-//     for (int cr = 0; cr < V; cr++)
-//         availableColors[cr] = true;
-        
-
-//     for (int v = 1; v < V; v++)
-//         colorOfVertex[vertices[v].getVertex()] = -1;
+    for (int i = 0; i < V; i++)
+        vertices[i].setDegree(getDegree(i));
     
-//     bool availableColors[V];;
-//     for (int cr = 0; cr < V; cr++)
-//         availableColors[cr] = true;
+    int colorOfVertex[V];
+    int saturation[V];
+    bool availableColors[V];
 
-//     int maxSatur = 0;
+    int mvd = maximumVertexDegree();
 
-//     for (int v = 1; v < V; v++) {
-//         for (int i = 0; i < V; i++) {
-//             if (adjMatrix[vertices[v].getVertex() * V + i] <= 0)
-//                 continue;
+    for (int v = 0; v < V; v++) {
+        availableColors[v] = true;
+        colorOfVertex[v] = -1;
+        vertices[v].setSatur(0);
+        vertices[v].setVertexColored(false);
+    }
 
-//             if (colorOfVertex[i] != -1) {
-//                 availableColors[colorOfVertex[i]] = false;
-//                 continue;
-//             }
+    colorOfVertex[mvd] = 0;
+    vertices[mvd].setSatur(-1);
+    vertices[mvd].setVertexColored(true); //saturation[mvd] = INT_MIN;
+    availableColors[colorOfVertex[mvd]] = false;
 
-//             maxSatur = vertices[i].getSizeOfColors();
+    for (auto& i : adjList[mvd])
+        vertices[i.getVertex()].setSatur(1);
+  
+    int maxVertexSatur = 0;
+    int vertex;
+    std::list<Vertex> queue;
+
+    for (int v = 1; v < V; v++) {
+        maxVertexSatur = 0;
+        for (auto i = adjList[v].begin(); i != adjList[v].end(); ++i) {
+            if (vertices[i->getVertex()].isVertexColored()) {
+                availableColors[colorOfVertex[vertices[i->getVertex()].getVertex()]] = false;
+                continue;
+            }
             
-//         }
+            if (vertices[i->getVertex()].getSatur() > maxVertexSatur){
+                maxVertexSatur = vertices[i->getVertex()].getSatur();
+            }
+        }
 
-//     }
-// }
+        std::vector<Vertex> remainingVertices;
+        for (auto i = adjList[v].begin(); i != adjList[v].end(); ++i) {
+            if (vertices[i->getVertex()].getSatur() != maxVertexSatur)
+                continue;
 
-void Graph::sortVerticesByDegree() {
-    std::sort(vertices.rbegin(), vertices.rend());
+            Vertex vObject(i->getVertex(), getDegree(i->getVertex()), vertices[i->getVertex()].getSatur(), vertices[i->getVertex()].isVertexColored());
+            remainingVertices.push_back(vObject);
+        }
+
+        if (remainingVertices.size() != 1)
+            sortVerticesByDegree(remainingVertices);
+
+        for (int i = 0; i < int(remainingVertices.size()); i++)
+            queue.push_back(remainingVertices[i]);
+
+        int cr;
+        for (cr = 0; cr < V; cr++)
+            if (availableColors[cr])
+                break;
+        
+        while (!queue.empty()) {
+            Vertex vObject;
+            vObject = queue.front();
+            
+            
+            availableColors[cr] = false;
+            colorOfVertex[vObject.getVertex()] = cr;
+            vertices[vObject.getVertex()].setVertexColored(true);
+            queue.pop_front();
+        }
+        std::cout << std::endl;
+        
+        for (int i = 0; i < V; i++) {
+            if (colorOfVertex[i] != -1)
+                availableColors[colorOfVertex[i]] = true;
+        }
+
+    }
+}
+
+void Graph::sortVerticesByDegree(std::vector<Vertex> &v) {
+    std::sort(v.rbegin(), v.rend());
+}
+
+int Graph::maximumVertexDegree() {
+    int max = getDegree(0);
+    int vertex = 0;
+  
+    for (int i = 1; i < V; i++) {
+        if (getDegree(i) > max) {
+            max = getDegree(i);
+            vertex = i;
+        }
+    }
+    return vertex;
 }
 
 void Graph::printStatisticArray() {
     for (int i = 0; i < 13; i++) {
         std::cout << statisticArray[i] << std::endl;
     }
+}
+
+int Graph::getDegree(int vertex) {
+    return adjList[vertex].size();
 }
 
 int Graph::getVertices() {return V;}

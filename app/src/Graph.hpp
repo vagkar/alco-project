@@ -1,6 +1,7 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include <climits>
 #include <list>
 #include <set>
 #include <iostream>
@@ -41,9 +42,9 @@ class Graph {  //undirected graph
         Graph(int V, std::string problemName);
         ~Graph();
 
-        void initializeAdjMatrix(std::vector<std::set<int>> examStudents); //initialize adjMatrix with false
+        void initializeAdjList(std::vector<std::set<int>> examStudents); //initialize adjMatrix with false
 
-        void addEdge(int i, int j, int c); //Store to adjMatrix Edges
+        void addEdge(int i, int j); //Store to adjMatrix Edges
 
         int commonElemets(std::set<int> v1, std::set<int> v2);
 
@@ -59,9 +60,13 @@ class Graph {  //undirected graph
 
         void DSatur();
 
-        void sortVerticesByDegree();
+        void sortVerticesByDegree(std::vector<Vertex> &v);
+
+        int maximumVertexDegree();
 
         void printStatisticArray();
+
+        int getDegree(int vertex);
 
         int getVertices(); // return number of Vertices
 
