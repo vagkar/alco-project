@@ -1,6 +1,8 @@
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
 
+#include <set>
+#include <list>
 #include <vector>
 
 class Vertex {
@@ -11,7 +13,7 @@ class Vertex {
         int satur;
         bool isColored = false;
 
-        std::vector<int> colors;
+        std::set<int, std::greater<int>> neighborColors;
 
     public:
         Vertex();
@@ -19,9 +21,7 @@ class Vertex {
         Vertex(int vertex, int degree);
         Vertex(int vertex, int degree, int satur, bool isColored);
 
-        // Vertex(Vertex& obj);
-
-        bool operator < (const Vertex& v);
+        bool operator<(const Vertex& v);
 
         void setVertex(int vertex);
         int getVertex();
@@ -31,13 +31,16 @@ class Vertex {
 
         void setSatur(int satur);
         int getSatur();
+        void raiseSatur();
 
         void setVertexColored(bool isColored);
         bool isVertexColored();
 
-        void addColor(int color);
-        int getSizeOfColors();
-        std::vector<int> getColors();
+        bool checkNeighborColor(int color, int source, std::list<Vertex> adjList, int cv[], std::vector<Vertex> vertices);
+
+        void addNeighborColor(int color);
+        int getSizeOfNeighborColors();
+        std::set<int, std::greater<int>> getNeighborColors();
 };
 
 #endif /* VERTEX_HPP */

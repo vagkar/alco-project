@@ -36,6 +36,7 @@ class Graph {  //undirected graph
         };
 
         std::vector<Vertex> vertices;
+        std::set<int, std::greater<int>> colors;
     public:
         
         Graph();
@@ -63,6 +64,10 @@ class Graph {  //undirected graph
         void sortVerticesByDegree(std::vector<Vertex> &v);
 
         int maximumVertexDegree();
+
+        bool graphIsColored();
+
+        bool checkNeighborColor(int color, int source);
 
         void printStatisticArray();
 

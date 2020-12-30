@@ -5,12 +5,14 @@ Vertex::Vertex(){}
 Vertex::Vertex(int vertex) {
     setVertex(vertex);
     setSatur(0);
+    setVertexColored(false);
 }
 
 Vertex::Vertex(int vertex, int degree) {
     setVertex(vertex);
     setDegree(degree);
     setSatur(0);
+    setVertexColored(false);
 }
 
 Vertex::Vertex(int vertex, int degree, int satur, bool isColored) {
@@ -20,14 +22,7 @@ Vertex::Vertex(int vertex, int degree, int satur, bool isColored) {
     setVertexColored(isColored);
 }
 
-// Vertex::Vertex(Vertex& obj) {
-//     setVertex(obj.vertex);
-//     setDegree(obj.degree);
-//     setSatur(obj.satur);
-//     setVertexColored(obj.isColored);
-// }
-
-bool Vertex::operator < (const Vertex& v) {
+bool Vertex::operator<(const Vertex& v) {
     return this->degree < v.degree;
 }
 
@@ -55,6 +50,10 @@ int Vertex::getSatur() {
     return this -> satur;
 }
 
+void Vertex::raiseSatur() {
+    this->satur++;
+}
+
 void Vertex::setVertexColored(bool isColored) {
     this -> isColored = isColored;
 }
@@ -63,14 +62,22 @@ bool Vertex::isVertexColored() {
     return this -> isColored;
 }
 
-void Vertex::addColor(int color) {
-    this -> colors.push_back(color);
+bool Vertex::checkNeighborColor(int color, int source, std::list<Vertex> adjList, int cv[], std::vector<Vertex> vertices) {
+    for (auto i = adjList.begin(); i != adjList.end(); ++i)
+        if (vertices[i->getVertex()].isVertexColored() && vertices[i->getVertex()].getVertex() != source)
+            if (color == cv[source])
+                return true;
+    return false;
 }
 
-int Vertex::getSizeOfColors() {
-    return this -> colors.size();
+void Vertex::addNeighborColor(int color) {
+    this -> neighborColors.insert(color);
 }
 
-std::vector<int> Vertex::getColors() {
-    return this -> colors;
+int Vertex::getSizeOfNeighborColors() {
+    return this -> neighborColors.size();
+}
+
+std::set<int, std::greater<int>> Vertex::getNeighborColors() {
+    return this -> neighborColors;
 }
