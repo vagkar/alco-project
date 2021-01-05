@@ -171,7 +171,7 @@ void Graph::DSatur() {
     vertices[mvd].setVertexColored(true);
 
     for (auto it = adjList[mvd].begin(); it != adjList[mvd].end(); ++it) {
-        if (!(vertices[it->getVertex()].checkNeighborColor(colorOfVertex[it->getVertex()], it->getVertex(), adjList[mvd], colorOfVertex, vertices)))
+        if (!(vertices[it->getVertex()].checkNeighborColor(colorOfVertex[it->getVertex()], mvd, adjList[it->getVertex()], colorOfVertex, vertices)))
            vertices[it->getVertex()].raiseSatur();
 
     }
@@ -207,7 +207,7 @@ void Graph::DSatur() {
         );
 
         if (diff.size() > 0) {
-            colorOfVertex[maxSaturVertex] = *diff.begin();
+            colorOfVertex[maxSaturVertex] = *diff.end();
         } else {
             int newColor = *colors.end() + 1;
             colors.insert(newColor);
@@ -218,7 +218,7 @@ void Graph::DSatur() {
 
         //update Neighbors
         for (auto it = adjList[maxSaturVertex].begin(); it != adjList[maxSaturVertex].end(); ++it)
-            if (!(vertices[it->getVertex()].checkNeighborColor(colorOfVertex[it->getVertex()], it->getVertex(), adjList[maxSaturVertex], colorOfVertex, vertices)))
+            if (!(vertices[it->getVertex()].checkNeighborColor(colorOfVertex[maxSaturVertex], maxSaturVertex, adjList[it->getVertex()], colorOfVertex, vertices)))
                 vertices[it->getVertex()].raiseSatur();
     }
 

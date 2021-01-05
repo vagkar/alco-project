@@ -65,7 +65,7 @@ bool Vertex::isVertexColored() {
 bool Vertex::checkNeighborColor(int color, int source, std::list<Vertex> adjList, int cv[], std::vector<Vertex> vertices) {
     for (auto i = adjList.begin(); i != adjList.end(); ++i)
         if (vertices[i->getVertex()].isVertexColored() && vertices[i->getVertex()].getVertex() != source)
-            if (color == cv[source])
+            if (color == cv[i->getVertex()])
                 return true;
     return false;
 }
