@@ -47,7 +47,7 @@ class Graph {  //undirected graph
 
         void addEdge(int i, int j); //Store to adjMatrix Edges
 
-        int commonElemets(std::set<int> v1, std::set<int> v2);
+        int commonElements(std::set<int> v1, std::set<int> v2);
 
         void conflictDensity();
 

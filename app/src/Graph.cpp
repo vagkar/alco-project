@@ -22,7 +22,7 @@ void Graph::initializeAdjList(std::vector<std::set<int>> examStudents) {
             if (i == j) 
                 continue;
 
-            int c = commonElemets(examStudents[i + 1], examStudents[j + 1]);
+            int c = commonElements(examStudents[i + 1], examStudents[j + 1]);
             if (c > 0) {
                 if (j > i)
                     addEdge(i, j);
@@ -40,7 +40,7 @@ void Graph::addEdge(int i, int j) {
     adjList[j].push_back(v2);
 }
 
-int Graph::commonElemets(std::set<int> s1, std::set<int> s2) {
+int Graph::commonElements(std::set<int> s1, std::set<int> s2) {
     int c = 0;
     for (int x : s1) {
         for (int y : s2) {
@@ -116,6 +116,7 @@ void Graph::FirstFit()
 {
     sortVerticesByDegree(vertices);
     int colorOfVertex[V];
+    int colorSize = 0;
 
     for (int u = 1; u < V; u++)
         colorOfVertex[vertices[u].getVertex()] = -1; 
@@ -138,9 +139,13 @@ void Graph::FirstFit()
 
         // Find the first available color
         int cr;
-        for (cr = 0; cr < V; cr++)
+        for (cr = 0; cr < V; cr++) {
+            if (cr > colorSize)
+                colorSize = cr;
+
             if (availableColors[cr])
                 break;
+        }
 
         colorOfVertex[vertices[u].getVertex()] = cr; // Assign the found color
 
@@ -155,6 +160,8 @@ void Graph::FirstFit()
     for (int u = 0; u < V; u++)
         std::cout << "Vertex " << u << " --->  Color "
              << colorOfVertex[u] << std::endl;
+
+    std::cout << "Size of Colors: " << colorSize + 1;
 }
 
 void Graph::DSatur() {
@@ -171,19 +178,19 @@ void Graph::DSatur() {
     vertices[mvd].setVertexColored(true);
 
     for (auto it = adjList[mvd].begin(); it != adjList[mvd].end(); ++it) {
-        if (!(vertices[it->getVertex()].checkNeighborColor(colorOfVertex[it->getVertex()], mvd, adjList[it->getVertex()], colorOfVertex, vertices)))
+        if (!(vertices[it->getVertex()].checkNeighborColor(colorOfVertex[mvd], mvd, adjList[it->getVertex()], colorOfVertex, vertices)))
            vertices[it->getVertex()].raiseSatur();
 
     }
 
     while (!graphIsColored()) {
-        int maxSaturDegree = 0;
+        int maxSaturDegree = -1;
         for (auto it = vertices.begin(); it != vertices.end(); ++it)
             if ((it->getSatur() > maxSaturDegree) && !(it->isVertexColored()))
                 maxSaturDegree = it->getSatur();
 
         int maxSaturVertex;
-        int degree = 0;
+        int degree = -1;
         for (auto it : vertices) {
             if ((it.getSatur() == maxSaturDegree) && !(it.isVertexColored())) {
                 if (it.getDegree() > degree) {
@@ -226,6 +233,8 @@ void Graph::DSatur() {
     for (int u = 0; u < V; u++)
         std::cout << "Vertex " << u << " --->  Color "
              << colorOfVertex[u] - 1 << std::endl;
+
+    std::cout << "Size of Colors: " << colors.size();
 }
 
 void Graph::sortVerticesByDegree(std::vector<Vertex> &v) {

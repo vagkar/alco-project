@@ -10,9 +10,9 @@
 
    - Όλα τα πηγαία αρχεία της εφασρμογής βρίσκονται στο φάκελο [src](https://github.com/vagkar/alco-project/tree/main/app/src)
 
-   - Υλοποίηση του [First Fit](https://github.com/vagkar/alco-project/blob/fbcd7e0f30c405d2bb7cae651608ef8bcd4d071e/app/src/Graph.cpp#L115)
+   - Υλοποίηση του [First Fit](https://github.com/vagkar/alco-project/blob/main/app/src/Graph.cpp#L115)
 
-   - Υλοποίηση του [DSatur](https://github.com/vagkar/alco-project/blob/fbcd7e0f30c405d2bb7cae651608ef8bcd4d071e/app/src/Graph.cpp#L160)
+   - Υλοποίηση του [DSatur](https://github.com/vagkar/alco-project/blob/main/app/src/Graph.cpp#L167)
 
 ---
 
